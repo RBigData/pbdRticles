@@ -25,43 +25,7 @@ hdfio::read_h5df("airlines.h5", rows=1:5, cols=1:5)
 
 We can quickly build a parallel reader by simply supplying different subsets of rows to different MPI processes. We will be using the `get.jid()` function from the [pbdMPI package](https://cran.r-project.org/web/packages/pbdMPI/index.html) to select the rows each rank will read (you could also use the `comm.chunk()` from the [pbdIO package](https://github.com/RBigData/pbdIO)). The function will divide `n` tasks as evenly as possible across the MPI ranks. In this way, we can change our resource size (number of MPI ranks) without needing to change our script.
 
-As a quick example, consider:
-
-```r
-suppressMessages(library(pbdMPI))
-
-n = 10
-id = get.jid(n)
-comm.print(id, all.rank=TRUE)
-
-finalize()
-```
-
-We can save this file as `jid_example.r` and run some examples via:
-
-```bash
-$ mpirun -np 2 Rscript jid_example.r
-## COMM.RANK = 0
-## [1] 1 2 3 4 5
-## COMM.RANK = 1
-## [1]  6  7  8  9 10
-$ mpirun -np 3 Rscript jid_example.r
-## @COMM.RANK = 0
-## @[1] 1 2 3
-## @COMM.RANK = 1
-## @[1] 4 5 6
-## COMM.RANK = 2
-## [1]  7  8  9 10
-$ mpirun -np 4 Rscript jid_example.r
-## COMM.RANK = 0
-## [1] 1 2
-## COMM.RANK = 1
-## [1] 3 4
-## COMM.RANK = 2
-## [1] 5 6 7
-## COMM.RANK = 3
-## [1]  8  9 10
-```
+The `get.jid()` function is discussed in the [pbdMPI tutorial](mpi.md). There you can find more information and some examples demonstrating how it works.
 
 
 
