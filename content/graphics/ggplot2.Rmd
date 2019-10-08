@@ -1,0 +1,202 @@
+---
+title: "Graphics with ggplot2"
+output:
+  pdf_document:
+    number_sections: true
+geometry: "left=0.5cm,right=0.5cm,top=0.5cm,bottom=1.5cm"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+```
+
+Consider the `mpg` dataset.
+``` {r}
+tail(mpg)
+```
+
+Make an empty plot with the data prepared.
+``` {r}
+g <- ggplot(mpg, aes(cty, hwy))
+print(g)
+```
+
+Actually plot some points.
+``` {r}
+g <- ggplot(mpg, aes(cty, hwy)) +
+    geom_point()
+print(g)
+```
+
+Add a loess smoother.
+``` {r}
+g <- ggplot(mpg, aes(cty, hwy)) +
+    geom_point() +
+    geom_smooth()
+print(g)
+```
+
+Customize axes, theme, etc.
+``` {r}
+g <- ggplot(mpg, aes(cty, hwy)) +
+    geom_point(shape = 17, size = 2) +
+    geom_smooth() +
+    labs(x = "City", y = "Highway", title = "Miles Per Gallon") +
+    theme_bw() +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
+print(g)
+```
+
+Now plot a histogram.
+``` {r}
+g <- ggplot(mpg, aes(hwy)) +
+    geom_histogram()
+print(g)
+```
+
+Customize the histogram.
+``` {r}
+g <- ggplot(mpg, aes(hwy)) +
+    geom_histogram(bins=20, fill="blue", color="black", size=0.25)
+print(g)
+```
+
+Plot a histogram for each value of `cyl`.
+``` {r}
+g <- ggplot(mpg, aes(hwy)) +
+    geom_histogram(bins=20, fill="blue", color="black", size=0.25) +
+    facet_wrap(~ cyl)
+print(g)
+```
+
+Plot boxplots for each value of `class`.
+``` {r}
+g <- ggplot(mpg, aes(class, hwy)) +
+    geom_boxplot()
+print(g)
+```
+
+Plot two boxplots together horizontally.
+``` {r}
+library(gridExtra)
+
+g <- ggplot(mpg, aes(class, hwy)) +
+    geom_boxplot()
+h <- ggplot(mpg, aes(class, cty)) +
+    geom_boxplot()
+grid.arrange(g, h)
+```
+
+Recall the AR(2) time series model
+\begin{align*}
+y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \epsilon_t, \quad
+\epsilon_t \stackrel{\text{iid}}{\sim} \text{N}(0, \sigma^2),
+\quad t = 1, \ldots, n.
+\end{align*}
+
+Generate an AR(2) series and plot it.
+``` {r}
+y <- arima.sim(n = 200, list(ar = c(0.5, -0.2), sd = sqrt(0.25)))
+dat <- data.frame(t = 1:200, y = as.numeric(y))
+g <- ggplot(dat, aes(t, y)) + geom_line()
+print(g)
+```
+
+What about plotting multiple series on one plot? First draw the series.
+``` {r}
+n <- 200
+y1 <- 0 + arima.sim(n = n, list(ar = c(0.5, -0.2), sd = sqrt(0.25)))
+y2 <- 3 + arima.sim(n = n, list(ar = c(0.1, -0.2), sd = sqrt(0.25)))
+y3 <- -3 + arima.sim(n = n, list(ar = c(0.7, -0.2), sd = sqrt(0.5)))
+```
+
+Make the series columns of a `data.frame`.
+``` {r}
+dat <- data.frame(t = 1:n, y1 = as.numeric(y1), y2 = as.numeric(y2), y3 = as.numeric(y3))
+head(dat, 3)
+```
+
+Reshape the `data.frame` by stacking the series vertically.
+``` {r}
+library(reshape2)
+newdat <- melt(dat, 't')
+head(newdat)
+tail(newdat)
+```
+
+Here is one way to plot the series together.
+``` {r}
+g <- ggplot(newdat, aes(x = t, y = value,
+            group = variable,
+            color = variable,
+            linetype = variable)) +
+    geom_line() +
+    theme(legend.position = "bottom") +
+    ggtitle("Multiple Series")
+print(g)
+```
+
+Draw from bivariate normal.
+``` {r}
+library(mvtnorm)
+Sigma <- matrix(c(1, 1/2, 1/2, 1), 2, 2)
+x <- rmvnorm(n = 10000, mean = c(0,0), sigma = Sigma)
+dat <- data.frame(x)
+colnames(dat) <- c("x", "y")
+```
+
+Plot the points and superimpose contours.
+``` {r}
+g <- ggplot(dat, aes(x=x, y=y)) +
+    geom_point() +
+    geom_density2d()
+print(g)
+```
+
+Plot bins instead to display density values.
+``` {r}
+g <- ggplot(dat, aes(x=x, y=y)) +
+    geom_bin2d() +
+    scale_fill_gradient(low = "blue", high = "red")
+print(g)
+```
+
+Plot hexigonal bins instead.
+``` {r}
+library(hexbin)
+g <- ggplot(dat, aes(x=x, y=y)) +
+    geom_hex() +
+    scale_fill_gradient(low = "blue", high = "red") +
+    coord_cartesian(xlim = c(-2.5, 2.5), ylim = c(-2.5, 2.5)) +
+    theme(legend.position = "bottom")
+print(g)
+```
+
+Generate data from a trinomial distribution.
+``` {r}
+m <- 10
+grid <- expand.grid(x = 0:m, y = 0:m)
+grid <- grid[grid$x + grid$y <= m,]
+grid$z <- m - grid$x - grid$y
+```
+
+Plot the trinomial data on a 2-d grid (no need to display the redundant third coordinate).
+``` {r}
+grid$dens <- apply(grid, 1, dmultinom, size=m, prob=c(0.1, 0.3, 0.6))
+g <- ggplot(grid, aes(x=x, y=y)) +
+    geom_raster(aes(fill = dens)) +
+    scale_fill_gradient(low = "yellow", high = "red") +
+    scale_x_discrete(limits = 0:m) +
+    scale_y_discrete(limits = 0:m)
+print(g)
+```
+
+To save the last plot, use `ggsave`. File type is determined by extension (pdf, png, jpg, etc).
+``` {r, eval = FALSE}
+ggsave("plot.pdf", width = 5, height = 5)
+```
