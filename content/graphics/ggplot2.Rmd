@@ -19,20 +19,20 @@ tail(mpg)
 
 ggplot is based on the Grammar of Graphics decomposition of graphing concepts, which allows very high-level control over graphics along with the ability to tune fine details. It is considered the gold standard for publication quality graphics. It is currently used by publications like The New York Times and The Economist due to its ability to quickly prototype custom graphics.
 
-Grphics are decomposed into layers. Let's begin with an empty plot with axes labeled by the data.
+Grphics are decomposed into layers. Let's begin with an empty xy-plot. The aesthetics `aes()` function assigns `x = cty` and `y = hwy`.
 ``` {r}
 g = ggplot(mpg, aes(cty, hwy))
 g
 ```
 
-The *print()* can be ommitted as the *print()* method is the default for an object that is not assigned. Now actually plot some points.
+Now we add `geom_point()` to tell ggplot how to represent the xy data. The `print()` can be ommitted as the `print()` method is the default for an object that is not assigned.
 ``` {r}
 g = ggplot(mpg, aes(cty, hwy)) +
     geom_point()
 g
 ```
 
-Add a loess smoother.
+Add another layer with a LOESS (locally estimated scatterplot smoothing) regression line and a confidence region (95% by default) for the line.
 ``` {r}
 g = ggplot(mpg, aes(cty, hwy)) +
     geom_point() +
@@ -40,11 +40,11 @@ g = ggplot(mpg, aes(cty, hwy)) +
 g
 ```
 
-Customize axes, theme, etc.
+Customize axes, theme, etc. Notably, we choose generalized additive models from the package `mgcv` to fit thin plate splines with crossvalidation to the data instead of the default LOESS above. Again, a 95% confidence region is shown for the local mean.
 ``` {r}
 g = ggplot(mpg, aes(cty, hwy)) +
     geom_point(shape = 17, size = 2) +
-    geom_smooth() +
+    geom_smooth(method = mgcv::gam, formula = y ~ s(x, bs = "tp")) +
     labs(x = "City", y = "Highway", title = "Miles Per Gallon") +
     theme_bw() +
     theme(panel.grid.major = element_blank(),
@@ -52,7 +52,7 @@ g = ggplot(mpg, aes(cty, hwy)) +
 g
 ```
 
-Now plot a histogram.
+Now change the aesthetics to `x = hwy`, dropping the `y`, and its representation to a histogram.
 ``` {r}
 g = ggplot(mpg, aes(hwy)) +
     geom_histogram()
@@ -92,7 +92,7 @@ h = ggplot(mpg, aes(class, cty)) +
 grid.arrange(g, h)
 ```
 
-Recall the AR(2) time series model
+Suppose we have an autoregressive Gaussian process  of order 2, denoted by AR(2), time series model
 \begin{align*}
 y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \epsilon_t, \quad
 \epsilon_t \stackrel{\text{iid}}{\sim} \text{N}(0, \sigma^2),
@@ -153,7 +153,7 @@ colnames(dat) = c("x", "y")
 Plot the points and superimpose contours.
 ``` {r}
 g = ggplot(dat, aes(x=x, y=y)) +
-    geom_point() +
+    geom_point(alpha = 0.2) +
     geom_density2d()
 g
 ```
