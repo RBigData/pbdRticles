@@ -3,6 +3,10 @@ title: "Graphics with ggplot2"
 ---
 
 This .Rmd file can be composed into a Notebook result (.html or .pdf) with RStudio. Any of the R code chunks can also be submitted or be part of a batch Rscript submission.
+
+Before we begin, note that an amazing collection of ggplot2 and other R graphics examples that go way beyond this short tutorial and include animations as well as interactive graphics is available at [The R Graph Gallery](https://www.r-graph-gallery.com/).
+
+However, it is useful to start with some basics so The R Graph Gallery makes more sense.
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
