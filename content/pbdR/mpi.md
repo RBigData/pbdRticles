@@ -195,7 +195,7 @@ Figures are reproduced with permission from an old presentation of Jack Dongarra
 
 A barrier is sort of what it sounds like: a computation wall. No process is allowed to proceed until *all* processes can proceed.
 
-![](../pics/mpiops/mpi_barrier.png)
+![](pics/mpiops/mpi_barrier.png)
 
 Barrier is not a free operation (it is a collective, after all). You should try to avoid using barriers if possible.
 
@@ -218,7 +218,7 @@ finalize()
 
 Broadcasting is a one-to-many operation. It allows you to send an object held on one process to all the others.
 
-![](../pics/mpiops/mpi_bcast.png)
+![](pics/mpiops/mpi_bcast.png)
 
 And here is an example:
 
@@ -266,7 +266,7 @@ finalize()
 
 Gather is a many-to-one operation. It allows you to collect an object held on each process into a single list.
 
-![](../pics/mpiops/mpi_gather.png)
+![](pics/mpiops/mpi_gather.png)
 
 There are two gather functions: 
 
@@ -293,7 +293,7 @@ The workhorse of the collectives that solves more problems than it has any right
 
 Imagine that each processor has a number, and you want to add all of the numbers up across the different ranks. This is a classic example of a reduce with the sum operation. You could also pick the largest (max) or smallest (min), for example. In the illustration below, you can imagine each of the MPI ranks as a person voting on something:
 
-![](../pics/mpiops/mpi_reduce.png)
+![](pics/mpiops/mpi_reduce.png)
 
 This is effectively executed as a reduction. Reductions operate on vectors. So if you had 2 processes, which had vectors, respectively:
 
