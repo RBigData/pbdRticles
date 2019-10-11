@@ -2,7 +2,7 @@
 library(rmarkdown)
 
 outdir = "build"
-fmts = "md_document" # c("md_document", "html_document")
+fmts = "html_document" # c("md_document", "html_document")
 
 
 setroot = function(){
@@ -28,12 +28,17 @@ build = function(files, formats, outdir){
   }
 }
 
+find_rmd_files = function(path)
+{
+  dir(path, full.names=TRUE, pattern="*.rmd", ignore.case=TRUE)
+}
+
 
 setroot()
 clean(outdir)
 
-content_r = dir("content/R", full.names=TRUE)
+content_r = find_rmd_files("content/R")
 build(files=content_r, formats=fmts, outdir=outdir)
 
-content_pbdr = dir("content/pbdR", full.names=TRUE)
+content_pbdr = find_rmd_files("content/pbdR")
 build(files=content_pbdr, formats=fmts, outdir=outdir)
