@@ -173,6 +173,7 @@ To run on Summit, your code needs to use GPUs. There are some R packages which c
 
 If you want to use R and/or pbdR on Summit, please feel free to contact us directly:
 
+* Mike Matheson - mathesonma AT ornl DOT gov
 * George Ostrouchov - ostrouchovg AT ornl DOT gov
 * Drew Schmidt - schmidtda AT ornl DOT gov
 
