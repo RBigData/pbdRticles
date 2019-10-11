@@ -14,3 +14,5 @@ The ["Programming with Big Data in R" project (pbdR)](https://pbdr.org/) is a se
 
 
 # Machine Specific Information
+
+* [R and pbdR on Summit](machines/summit.md)
