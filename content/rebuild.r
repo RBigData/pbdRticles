@@ -15,12 +15,10 @@ setroot = function()
   }
 }
 
-clean = function(outdir)
+rmdir = function(path)
 {
-  if (dir.exists(outdir))
-    unlink(outdir, recursive = TRUE)
-  
-  dir.create(outdir)
+  if (dir.exists(path))
+    unlink(path, recursive = TRUE)
 }
 
 build = function(files, formats, outdir)
@@ -31,6 +29,10 @@ build = function(files, formats, outdir)
     filename = sub(basename(f), pattern="[.][Rr]md", replacement="")
     outfiles = c()
     
+    cachefiles = paste0(prepath, "/", filename, "_files")
+    cachefiles_outdir = paste0(outdir, "/", filename, "_files")
+    rmdir(cachefiles_outdir)
+    
     for (fmt in formats)
     {
       rmarkdown::render(f, output_format=fmt)
@@ -39,15 +41,17 @@ build = function(files, formats, outdir)
       outfiles = c(outfiles, paste0(prepath, "/", filename, ext))
     }
     
-    cachefiles = paste0(prepath, "/", filename, "_files")
     check = file.copy(from=cachefiles, to=outdir, recursive=TRUE)
     if (!isTRUE(check))
       stop(paste("could not move knitr cache files:", cachefiles))
     else
-      unlink(cachefiles, recursive = TRUE)
+      rmdir(cachefiles)
     
     for (of in outfiles)
     {
+      of_outdir = paste0(outdir, "/", filename, ext)
+      file.remove(of_outdir)
+      
       check = file.copy(from=of, to=outdir)
       if (!isTRUE(check))
         stop(paste("could not move generated outputfile:", of))
@@ -63,8 +67,8 @@ find_rmd_files = function(path)
 }
 
 
+
 setroot()
-clean(outdir)
 
 content_r = find_rmd_files("content/R")
 build(files=content_r, formats=fmts, outdir=outdir)
