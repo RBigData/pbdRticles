@@ -58,7 +58,7 @@ sessionInfo()
 
 
 
-## Running an R Script
+## How to Run an R Script
 
 Summit has a node hierarchy that can be very confusing for the uninitiated. The official documentation clarifies this, but here is a very quick summary:
 
@@ -84,7 +84,7 @@ The login nodes are not meant for running your scripts. You can install your R p
 
 
 
-## Running an Example R Script
+## Hello World Example
 
 We will run a slight modification of the hello world example from our [MPI tutorial](../pbdR/mpi.md) to show how this works. The R code is:
 
