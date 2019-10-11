@@ -6,6 +6,14 @@ Before proceeding, you should familiareize yourself with the [OLCF User Document
 
 Also, if you are not familiar with MPI or running R scripts in batch, then we strongly recommend reading our [MPI tutorial](../pbdR/mpi.md) first.
 
+Finally, if you want to use R and/or pbdR on Summit, please feel free to contact us directly:
+
+* Mike Matheson - mathesonma AT ornl DOT gov
+* George Ostrouchov - ostrouchovg AT ornl DOT gov
+* Drew Schmidt - schmidtda AT ornl DOT gov
+
+We are happy to provide various levels of support and collaboration. You can also put in a ticket with the OLCF help system [help@olcf.ornl.gov](mailto:help@olcf.ornl.gov) if you prefer.
+
 
 
 ## Loading R
@@ -171,10 +179,4 @@ The information below the dashes can be occasionally helpful for debugging somet
 
 To run on Summit, your code needs to use GPUs. There are some R packages which can use GPUs, such as xgboost. Several pbdR packages support GPU computing. It is also possible to offload some linear algebra computations (specifically matrix-matrix products, and methods which are computationally dominated by them) to the GPU using [NVIDIA's NVBLAS](https://docs.nvidia.com/cuda/nvblas/index.html).
 
-If you want to use R and/or pbdR on Summit, please feel free to contact us directly:
-
-* Mike Matheson - mathesonma AT ornl DOT gov
-* George Ostrouchov - ostrouchovg AT ornl DOT gov
-* Drew Schmidt - schmidtda AT ornl DOT gov
-
-We are happy to provide various levels of support and collaboration. You can also put in a ticket with the OLCF help system [help@olcf.ornl.gov](mailto:help@olcf.ornl.gov) if you prefer.
+If you want to do GPU computing on Summit with R, please contact us (info at the top of this document).
