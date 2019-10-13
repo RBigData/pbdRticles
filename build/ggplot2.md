@@ -14,12 +14,6 @@ First, we load the library.
 
     library(ggplot2)
 
-    ## Registered S3 methods overwritten by 'ggplot2':
-    ##   method         from 
-    ##   [.quosures     rlang
-    ##   c.quosures     rlang
-    ##   print.quosures rlang
-
 Next, consider the `mpg` dataset that is included with the ggplot2
 library.
 
@@ -37,10 +31,11 @@ library.
 
 ggplot is based on the Grammar of Graphics decomposition of graphing
 concepts, which allows very high-level control over graphics along with
-the ability to tune fine details. It is considered the gold standard for
-publication quality graphics. It is currently used by publications like
-The New York Times and The Economist due to its ability to quickly
-prototype custom graphics.
+the ability to tune fine details. It is currently used by publications
+like [The Upshot at The New York
+Times](https://flowingdata.com/tag/upshot/) and at [The
+BBC](https://bbc.github.io/rcookbook/) due to its ability to quickly
+prototype complex custom graphics.
 
 Grphics are decomposed into layers. Let's begin with an empty xy-plot.
 The aesthetics `aes()` function assigns `x = cty` and `y = hwy`.
@@ -138,8 +133,10 @@ Plot two boxplots together horizontally.
 
 Suppose we have a time series, *y*<sub>*t*</sub>, that is an
 autoregressive Gaussian process of order 2, denoted by AR(2):
-Generate the AR(2) series and plot it.
+Generate the AR(2) series and plot it. We start with `set.seed()` for
+reproducible results.
 
+    set.seed(538)
     y = arima.sim(n = 200, list(ar = c(0.5, -0.2), sd = sqrt(0.25)))
     dat = data.frame(t = 1:200, y = as.numeric(y))
     g = ggplot(dat, aes(t, y)) + geom_line()
@@ -161,10 +158,10 @@ variable.
     dat = data.frame(time = 1:n, y1 = as.numeric(y1), y2 = as.numeric(y2), y3 = as.numeric(y3))
     head(dat, 3)
 
-    ##   time         y1       y2        y3
-    ## 1    1 -0.2612947 2.867574 -2.279060
-    ## 2    2  0.9894948 2.372163 -2.048304
-    ## 3    3  2.3800501 3.096504 -2.212121
+    ##   time        y1       y2        y3
+    ## 1    1 -1.227759 3.974842 -3.045069
+    ## 2    2 -1.534146 2.083666 -4.026038
+    ## 3    3 -1.244123 2.648035 -4.798528
 
 Gather the `data.frame` variables (except `time`) by stacking the series
 vertically. The `tidyr` package is part of the `tidyverse` group of
@@ -176,22 +173,22 @@ function.
     head(newdat)
 
     ##   time key      value
-    ## 1    1  y1 -0.2612947
-    ## 2    2  y1  0.9894948
-    ## 3    3  y1  2.3800501
-    ## 4    4  y1  0.1302402
-    ## 5    5  y1 -1.4569723
-    ## 6    6  y1 -1.0424202
+    ## 1    1  y1 -1.2277594
+    ## 2    2  y1 -1.5341458
+    ## 3    3  y1 -1.2441234
+    ## 4    4  y1  2.3452855
+    ## 5    5  y1  2.5939705
+    ## 6    6  y1  0.6996064
 
     tail(newdat)
 
     ##      time key     value
-    ## 2155  715  y3 -4.881404
-    ## 2156  716  y3 -4.056651
-    ## 2157  717  y3 -2.536546
-    ## 2158  718  y3 -1.632101
-    ## 2159  719  y3 -1.065245
-    ## 2160  720  y3 -1.001008
+    ## 2155  715  y3 -3.351881
+    ## 2156  716  y3 -3.591867
+    ## 2157  717  y3 -2.793898
+    ## 2158  718  y3 -3.452302
+    ## 2159  719  y3 -5.155792
+    ## 2160  720  y3 -5.579000
 
 A `gather`ed data frame allows ploting the series together and using the
 `key` variable for data-dependent attributes.
