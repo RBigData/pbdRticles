@@ -3,7 +3,7 @@
 
 ## Background
 
-The [hdfio package](https://github.com/RBigData/hdfio) offers a set of high-level utilities for working with [HDF5](https://www.hdfgroup.org/). It defines a dataframe format in hdf5 storage and offers simple readers and converters for working with that format. It does expose the full capabilities of HDF5. For that, see the [rhdf5](https://www.bioconductor.org/packages/release/bioc/html/rhdf5.html) and [hdf5r](https://cran.r-project.org/web/packages/hdf5r/index.html) packages (we actually use hdf5r internally).
+The [hdfio package](https://github.com/RBigData/hdfio) offers a set of high-level utilities for working with [HDF5](https://www.hdfgroup.org/). It defines a dataframe format in hdf5 storage and offers simple readers and converters for working with that format. It does not expose the full capabilities of HDF5. For that, see the [rhdf5](https://www.bioconductor.org/packages/release/bioc/html/rhdf5.html) and [hdf5r](https://cran.r-project.org/web/packages/hdf5r/index.html) packages (we actually use hdf5r internally).
 
 With the package, you can easily convert CSVs into dataframes stored in binary hdf5 files. This can be done in batches for very large CSV files (so you need not read the entire dataset into memory), and can also convert directories of CSVs into a single hdf5 file. For the converters, see `hdfio::csv2h5()` and `hdfio::dir2h5()`.
 
