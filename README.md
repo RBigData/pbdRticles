@@ -8,10 +8,15 @@
 
 The ["Programming with Big Data in R" project (pbdR)](https://pbdr.org/) is a set of highly scalable R packages for distributed computing and profiling in data science.
 
+Basics:
 * [Parallel Computing with R and MPI via pbdMPI](content/pbdR/mpi.md)
 * [Task Parallelism with the tasktools Package](content/pbdR/tasktools.md)
 * [Distributed Matrices the pbdR Way](content/dist_mats.md)
 * [Parallel I/O with hdfio](content/pbdR/hdfio.md)
+
+Advanced topics:
+* [Analytics Cookbook](content/pbdR/analytics.md)
+* [GPU Computing with R and pbdR](content/pbdR/gpgpu.md)
 * [In-Situ Analysis with pbdR](content/pbdR/insitu.md)
 
 
