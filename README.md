@@ -15,7 +15,7 @@ Basics:
 * [Parallel I/O with hdfio](content/pbdR/hdfio.md)
 
 Advanced topics:
-* [Analytics Cookbook](content/pbdR/analytics.md)
+* [pbdR Analytics Cookbook](content/pbdR/analytics.md)
 * [GPU Computing with R and pbdR](content/pbdR/gpgpu.md)
 * [In-Situ Analysis with pbdR](content/pbdR/insitu.md)
 
