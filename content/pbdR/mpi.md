@@ -161,6 +161,8 @@ $ mpirun -np 2 r ply.r
 ## NULL
 ```
 
+We discuss task parallelism at more depth, including different ways to handle task parallel workloads with pbdR, in [a separate tutorial](tasktools.md).
+
 ### Parallel RNG
 
 Finally, there is the matter of random number generation. Since "random" generation isn't truly random, some care must be taken if you want to use (pseudo-)randomness in an R script with multiple processes. The `comm.set.seed()` function handles this for you, using the L'Ecuyer method via the [rlecuyer package](https://cran.r-project.org/web/packages/rlecuyer/index.html). If you want all processes to have the same seed, then use the `diff=FALSE` option. Otherwise, each process will have different local seeds to ensure that the parallel RNG streams do not merge.
