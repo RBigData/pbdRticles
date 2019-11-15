@@ -71,7 +71,7 @@ $ mpirun -np 2 Rscript read.r
 
 Here the data is being read "by row", meaning that rows are contiguous on the MPI ranks. Said another way, if a process owns any part of a row, then it owns the entire row. More complex things are possible, but this is a very good start. Some more complicated strategies include reading directly into a block-cyclic format, or creating a new MPI communicator just for reading.
 
-Once the data has been read in parallel, you can use our distributed matrix packages to compute on the data. See our distributed matrix tutorials for examples.
+Once the data has been read in parallel, you can use our distributed matrix packages to compute on the data. See our [distributed matrix tutorial](dist_mats.md) for more information.
 
 
 
