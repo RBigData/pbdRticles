@@ -11,7 +11,7 @@ The ["Programming with Big Data in R" project (pbdR)](https://pbdr.org/) is a se
 Basics:
 * [Parallel Computing with R and MPI via pbdMPI](./content/pbdR/mpi.md)
 * [Task Parallelism with the tasktools Package](./content/pbdR/tasktools.md)
-* [Distributed Matrices the pbdR Way](./content/dist_mats.md)
+* [Distributed Matrices the pbdR Way](./content/pbdR/dist_mats.md)
 * [Parallel I/O with hdfio](./content/pbdR/hdfio.md)
 
 Advanced topics:
