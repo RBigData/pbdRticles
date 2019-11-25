@@ -17,10 +17,11 @@ Basics:
 * [Distributed Matrices the pbdR Way](./content/pbdR/dist_mats.md)
 * [Parallel I/O with hdfio](./content/pbdR/hdfio.md)
 
-Advanced topics:
+<!-- Advanced topics:
 * [pbdR Analytics Cookbook](./content/pbdR/analytics.md)
 * [GPU Computing with R and pbdR](./content/pbdR/gpgpu.md)
-* [In-Situ Analysis with pbdR](./content/pbdR/insitu.md)
+* [In-Situ Analysis with pbdR](./content/pbdR/insitu.md) -->
+
 
 
 # Machine Specific Information
