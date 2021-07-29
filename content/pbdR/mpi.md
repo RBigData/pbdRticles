@@ -3,11 +3,11 @@
 
 ## Background
 
-Before getting into the details here, it is useful to spend a second talking about some of the programming paradigms we will be using. Most MPI codes are written in Single Program/Multiple Data (SPMD). The basic idea is that you write one program (in this case, an R script), and all of the processes will run that same script. The parallelism comes from them doing whatever it is they need to do on their subset of data, which differs from the data held on other processes.
+Before getting into the details here, it is useful to spend a second talking about some of the programming paradigms we will be using. Most MPI codes are written in Single Program/Multiple Data (SPMD). The basic idea is that you write one program (in this case, an R script), and all of the processes will run that same script. The parallelism comes from assigning a different "rank" to each copy of the program and this knowldege is then used to work with different data and/or do different components of tasks. Converting a serial code to an SPMD code can be thought of as a kind of generalization of the serial code. While this may sound complicated at first, it is by far the simplest way write highly scalable code, and it becomes second nature after some experimentation.
 
 Today, most parallelism used by R programmers falls under the "manager/worker" (sometimes called "master/worker" or "master/slave"). Here, one process (the manager) is held out to manage the worker processes. Sometimes this is a useful strategy, for example when trying to compute many heterogeneous tasks that complete at unknown times. However, it is generally much less scalable than SPMD. The real life analogue is to imagine having a manager having to instruct all works of their tasks any time they did anything, versus self-organizing workers. Which would you expect to be able to get more work done?
 
-In practice, SPMD codes will have some manager/worker sections. Whenever something special is only done on "rank 0" (more on that later), this is exactly what is going on. But in SPMD programs, these sections are generally fairly basic. I/O is commonly handled in this way, before proceeding to the main SPMD-written part of the program.
+In practice, SPMD codes will have some manager/worker sections. Whenever something special is only done on "rank 0" (more on that later), this is exactly what is going on. But in SPMD programs, these sections are generally fairly basic. I/O is commonly handled in this way, before proceeding to the main SPMD-written part of the program. However, if your HPC system includes a parallel file system, even I/O can be handled via SPMD in parallel and much faster.
 
 You can read more about SPMD at the [SPMD wikipedia article](https://en.wikipedia.org/wiki/SPMD).
 
@@ -36,7 +36,7 @@ An MPI communicator defines the concept of a *rank*. A rank is the unique (to th
 **Recap**:
 
 * Finish every MPI-using R script with a call to `finalize()`.
-* Use `comm.rank()` (zero-indexed!) to figure out which rank the caller is
+* Use `comm.rank()` (zero-indexed!) to figure out which rank (who) you are.
 * Use `comm.size()` to figure out how many ranks there are.
 
 
