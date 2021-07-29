@@ -243,7 +243,7 @@ finalize()
 
 ### Scatter
 
-Scatter is a many-to-one operation that is conceptually similar to a broadcast. However, rather than sending the entirety of one object to all processes, it sends pieces of a list (with exactly `comm.size()` elements) to the various ranks. The first element of the list will go to the first MPI rank (numbered 0 in the communicator), the second element to the second MPI rank (rank 1), and so on.
+Scatter is a one-to-many operation that is conceptually similar to a broadcast. However, rather than sending the entirety of one object to all processes, it sends pieces of a list (with exactly `comm.size()` elements) to the various ranks. The first element of the list will go to the first MPI rank (numbered 0 in the communicator), the second element to the second MPI rank (rank 1), and so on.
 
 Here's a quick example using scatter:
 
@@ -333,17 +333,18 @@ finalize()
     - Send all components of one object from one process to all.
     - R command: `bcast()`
 * Scatter
-    - Send one element of a list to each process.
+    - Send a different element of a list to each process.
     - R command: `scatter()`
 * Gather
     - Collect objects from all ranks into one place.
     - R command: `gather()` and `allgather()`
-    - Like a reverse broadcast/scatter.
+    - Like a reverse scatter.
 * Reduce
     - Operate (add, min, max, ...) on every element of a vector across processes.
     - R command: `reduce()` and `allreduce()`
     - Extremely powerful operation. 
 
+All of these operations are highly optimized and parallel when possible. Especially the Reduce operation takes advantage of associativity of its operations that allows a high degree of parallelism in its communication as well as in the reduction itself. Further, the pbdMPI implementation avoids serialization in most instances, giving a speed advantage over Rmpi.
 
 
 ## Advanced Topics
