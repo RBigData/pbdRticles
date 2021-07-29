@@ -273,7 +273,7 @@ Gather is a many-to-one operation. It allows you to collect an object held on ea
 There are two gather functions: 
 
 * `gather()`: gathers to one process, called the root. Said another way, only one MPI rank owns the final answer.
-* `allreduce()`: gathers to all processes. Each process owns the final answer.
+* `allgather()`: gathers to all processes. Each process owns the final answer.
 
 An example of using a gather operation is provided below:
 
